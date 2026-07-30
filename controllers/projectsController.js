@@ -79,8 +79,72 @@ const createProject = async (req, res) => {
   }
 };
 
+const updateProject = async (req, res) => {
+  try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid project id.' });
+    }
+
+    const missingFields = findMissingFields(req.body);
+
+    if (missingFields.length) {
+      return res.status(400).json({
+        message: 'Missing required project fields.',
+        missingFields,
+      });
+    }
+
+    const project = {
+      name: req.body.name,
+      description: req.body.description,
+      status: req.body.status,
+      priority: req.body.priority,
+      category: req.body.category,
+      ownerEmail: req.body.ownerEmail,
+      startDate: req.body.startDate,
+      dueDate: req.body.dueDate,
+      createdAt: req.body.createdAt || new Date().toISOString().slice(0, 10),
+    };
+
+    const result = await getCollection().replaceOne(
+      { _id: new ObjectId(req.params.id) },
+      project
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ message: 'Project not found.' });
+    }
+
+    return res.status(204).send();
+  } catch (err) {
+    return res.status(500).json({ message: 'Failed to update project.' });
+  }
+};
+
+const deleteProject = async (req, res) => {
+  try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid project id.' });
+    }
+
+    const result = await getCollection().deleteOne({
+      _id: new ObjectId(req.params.id),
+    });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Project not found.' });
+    }
+
+    return res.status(204).send();
+  } catch (err) {
+    return res.status(500).json({ message: 'Failed to delete project.' });
+  }
+};
+
 module.exports = {
   getAllProjects,
   getProjectById,
   createProject,
+  updateProject,
+  deleteProject,
 };

@@ -79,8 +79,74 @@ const createTask = async (req, res) => {
   }
 };
 
+const updateTask = async (req, res) => {
+  try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid task id.' });
+    }
+
+    const missingFields = findMissingFields(req.body);
+
+    if (missingFields.length) {
+      return res.status(400).json({
+        message: 'Missing required task fields.',
+        missingFields,
+      });
+    }
+
+    if (!ObjectId.isValid(req.body.projectId)) {
+      return res.status(400).json({ message: 'Invalid project id.' });
+    }
+
+    const task = {
+      projectId: new ObjectId(req.body.projectId),
+      title: req.body.title,
+      description: req.body.description,
+      status: req.body.status,
+      assignedTo: req.body.assignedTo,
+      dueDate: req.body.dueDate,
+      createdAt: req.body.createdAt || new Date().toISOString().slice(0, 10),
+    };
+
+    const result = await getCollection().replaceOne(
+      { _id: new ObjectId(req.params.id) },
+      task
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ message: 'Task not found.' });
+    }
+
+    return res.status(204).send();
+  } catch (err) {
+    return res.status(500).json({ message: 'Failed to update task.' });
+  }
+};
+
+const deleteTask = async (req, res) => {
+  try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid task id.' });
+    }
+
+    const result = await getCollection().deleteOne({
+      _id: new ObjectId(req.params.id),
+    });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Task not found.' });
+    }
+
+    return res.status(204).send();
+  } catch (err) {
+    return res.status(500).json({ message: 'Failed to delete task.' });
+  }
+};
+
 module.exports = {
   getAllTasks,
   getTaskById,
   createTask,
+  updateTask,
+  deleteTask,
 };

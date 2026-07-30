@@ -1,11 +1,14 @@
 ### Home
 GET http://localhost:3000/
 
+### Swagger documentation
+GET http://localhost:3000/api-docs/
+
 ### Get all projects
 GET http://localhost:3000/projects
 
 ### Get one project
-GET http://localhost:3000/projects/6a6992cbb30c4a5036ae6086
+GET http://localhost:3000/projects/6a6ab4b08a1ad98d5efdf176
 
 ### Create project
 POST http://localhost:3000/projects
@@ -22,6 +25,25 @@ Content-Type: application/json
   "dueDate": "2026-07-20",
   "createdAt": "2026-06-01"
 }
+
+### Update project
+PUT http://localhost:3000/projects/6a6ab4b08a1ad98d5efdf176
+Content-Type: application/json
+
+{
+  "name": "Restaurant API",
+  "description": "Build an API to manage menus and customer orders",
+  "status": "completed",
+  "priority": "medium",
+  "category": "restaurant",
+  "ownerEmail": "ana@example.com",
+  "startDate": "2026-06-01",
+  "dueDate": "2026-07-20",
+  "createdAt": "2026-06-01"
+}
+
+### Delete project
+DELETE http://localhost:3000/projects/6a6ab4b08a1ad98d5efdf176
 
 ### Get all tasks
 GET http://localhost:3000/tasks
@@ -42,3 +64,20 @@ Content-Type: application/json
   "dueDate": "2026-08-15",
   "createdAt": "2026-07-28"
 }
+
+### Update task
+PUT http://localhost:3000/tasks/6a69946860bffd379fca234b
+Content-Type: application/json
+
+{
+  "projectId": "6a6992cbb30c4a5036ae6085",
+  "title": "Create student endpoints",
+  "description": "Implement CRUD endpoints for students",
+  "status": "in-progress",
+  "assignedTo": "carlos@example.com",
+  "dueDate": "2026-08-15",
+  "createdAt": "2026-07-28"
+}
+
+### Delete task
+DELETE http://localhost:3000/tasks/6a69946860bffd379fca234b
