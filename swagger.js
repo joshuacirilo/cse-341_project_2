@@ -6,7 +6,7 @@ const doc = {
     description: 'REST API for managing projects and tasks.',
   },
   host: 'localhost:3000',
-  schemes: ['http'],
+  schemes: ['http', 'https'],
   definitions: {
     Project: {
       _id: '6a6992cbb30c4a5036ae6086',

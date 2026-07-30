@@ -5,12 +5,17 @@ const swaggerDocument = require('../swagger.json');
 const router = express.Router();
 
 router.use('/', (req, res, next) => {
-  swaggerDocument.host = req.get('host');
-  swaggerDocument.schemes = [req.protocol];
-  req.swaggerDoc = swaggerDocument;
+  const protocol = req.get('x-forwarded-proto') || req.protocol || 'https';
+
+  req.swaggerDoc = {
+    ...swaggerDocument,
+    host: req.get('host'),
+    schemes: [protocol],
+  };
+
   next();
 });
 
-router.use('/', swaggerUi.serve, swaggerUi.setup());
+router.use('/', swaggerUi.serve, swaggerUi.setup(null, { swaggerOptions: {} }));
 
 module.exports = router;

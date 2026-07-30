@@ -8,7 +8,7 @@ GET http://localhost:3000/api-docs/
 GET http://localhost:3000/projects
 
 ### Get one project
-GET http://localhost:3000/projects/6a6ab4b08a1ad98d5efdf176
+GET http://localhost:3000/projects/6a6aba89414af455a8242851
 
 ### Create project
 POST http://localhost:3000/projects
