@@ -1,5 +1,9 @@
 const express = require('express');
 const projectsController = require('../controllers/projectsController');
+const {
+  validateObjectIdParam,
+  validateProjectBody,
+} = require('../middleware/validation');
 
 const router = express.Router();
 
@@ -8,7 +12,11 @@ router.get('/', projectsController.getAllProjects);
 // #swagger.summary = 'Get all projects'
 // #swagger.responses[200] = { description: 'Projects returned successfully', schema: [{ $ref: '#/definitions/Project' }] }
 
-router.get('/:id', projectsController.getProjectById);
+router.get(
+  '/:id',
+  validateObjectIdParam('id', 'project'),
+  projectsController.getProjectById
+);
 // #swagger.tags = ['Projects']
 // #swagger.summary = 'Get a project by id'
 // #swagger.parameters['id'] = { in: 'path', required: true, type: 'string' }
@@ -16,14 +24,19 @@ router.get('/:id', projectsController.getProjectById);
 // #swagger.responses[400] = { description: 'Invalid project id' }
 // #swagger.responses[404] = { description: 'Project not found' }
 
-router.post('/', projectsController.createProject);
+router.post('/', validateProjectBody, projectsController.createProject);
 // #swagger.tags = ['Projects']
 // #swagger.summary = 'Create a project'
 // #swagger.parameters['body'] = { in: 'body', required: true, schema: { $ref: '#/definitions/ProjectInput' } }
 // #swagger.responses[201] = { description: 'Project created successfully' }
 // #swagger.responses[400] = { description: 'Missing required project fields' }
 
-router.put('/:id', projectsController.updateProject);
+router.put(
+  '/:id',
+  validateObjectIdParam('id', 'project'),
+  validateProjectBody,
+  projectsController.updateProject
+);
 // #swagger.tags = ['Projects']
 // #swagger.summary = 'Update a project'
 // #swagger.parameters['id'] = { in: 'path', required: true, type: 'string' }
@@ -32,7 +45,11 @@ router.put('/:id', projectsController.updateProject);
 // #swagger.responses[400] = { description: 'Invalid project id or missing required fields' }
 // #swagger.responses[404] = { description: 'Project not found' }
 
-router.delete('/:id', projectsController.deleteProject);
+router.delete(
+  '/:id',
+  validateObjectIdParam('id', 'project'),
+  projectsController.deleteProject
+);
 // #swagger.tags = ['Projects']
 // #swagger.summary = 'Delete a project'
 // #swagger.parameters['id'] = { in: 'path', required: true, type: 'string' }
