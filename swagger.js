@@ -101,5 +101,30 @@ swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
     });
   });
 
+  const setBodySchema = (path, method, definitionName) => {
+    const operation = swaggerDocument.paths[path]?.[method];
+
+    if (!operation) {
+      return;
+    }
+
+    const bodyParameter = operation.parameters?.find(
+      (parameter) => parameter.in === 'body'
+    );
+
+    if (!bodyParameter) {
+      return;
+    }
+
+    bodyParameter.schema = {
+      $ref: `#/definitions/${definitionName}`,
+    };
+  };
+
+  setBodySchema('/projects/', 'post', 'ProjectInput');
+  setBodySchema('/projects/{id}', 'put', 'ProjectInput');
+  setBodySchema('/tasks/', 'post', 'TaskInput');
+  setBodySchema('/tasks/{id}', 'put', 'TaskInput');
+
   fs.writeFileSync(outputFile, `${JSON.stringify(swaggerDocument, null, 2)}\n`);
 });

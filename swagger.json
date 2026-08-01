@@ -102,36 +102,7 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                },
-                "priority": {
-                  "example": "any"
-                },
-                "category": {
-                  "example": "any"
-                },
-                "ownerEmail": {
-                  "example": "any"
-                },
-                "startDate": {
-                  "example": "any"
-                },
-                "dueDate": {
-                  "example": "any"
-                },
-                "createdAt": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/ProjectInput"
             }
           }
         ],
@@ -203,36 +174,7 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                },
-                "priority": {
-                  "example": "any"
-                },
-                "category": {
-                  "example": "any"
-                },
-                "ownerEmail": {
-                  "example": "any"
-                },
-                "startDate": {
-                  "example": "any"
-                },
-                "dueDate": {
-                  "example": "any"
-                },
-                "createdAt": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/ProjectInput"
             }
           }
         ],
@@ -320,30 +262,7 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "projectId": {
-                  "example": "any"
-                },
-                "title": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                },
-                "assignedTo": {
-                  "example": "any"
-                },
-                "dueDate": {
-                  "example": "any"
-                },
-                "createdAt": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/TaskInput"
             }
           }
         ],
@@ -415,30 +334,7 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "projectId": {
-                  "example": "any"
-                },
-                "title": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                },
-                "assignedTo": {
-                  "example": "any"
-                },
-                "dueDate": {
-                  "example": "any"
-                },
-                "createdAt": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/TaskInput"
             }
           }
         ],
